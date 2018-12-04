@@ -1,3 +1,7 @@
+//=======
+// This is totally unfinished. I got sidetracked and decided to draw shapes in
+// matrices instead of solving the problem. Oops.
+//=======
 extern crate nalgebra as na;
 
 use self::na::{Dynamic, MatrixVec, Matrix};
