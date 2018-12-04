@@ -1,3 +1,7 @@
+extern crate nalgebra as na;
+#[macro_use]
+extern crate nom;
+
 mod day1;
 mod day2;
 mod day3;

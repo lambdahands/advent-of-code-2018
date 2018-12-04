@@ -1,0 +1,2 @@
+digit = { ASCII_DIGIT+ }
+line = { "#" ~ digit }
