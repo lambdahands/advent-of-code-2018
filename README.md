@@ -6,4 +6,4 @@ I know _very little_ Rust or systems programming, but learning it is ridiculousl
 
 Having experience with function languages like Clojure, Haskell, and OCaml made me
 unlearn quite a bit in terms of how I view programs, and now I feel as Rust is making
-me do the same to _those_ languages (it's okay to mutate!).
+me do the same to _those_ languages (mutability can be fun!).
