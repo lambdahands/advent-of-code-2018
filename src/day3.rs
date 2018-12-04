@@ -1,5 +1,4 @@
 extern crate nalgebra as na;
-extern crate typenum;
 
 use self::na::{Dynamic, MatrixVec, Matrix};
 

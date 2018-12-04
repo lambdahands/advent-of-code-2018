@@ -5,4 +5,3 @@ authors = ["Philip Diaz <lambdahands@gmail.com>"]
 
 [dependencies]
 nalgebra = "0.16.0"
-typenum = "1.10.0"
