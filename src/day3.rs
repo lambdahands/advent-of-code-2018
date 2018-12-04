@@ -74,32 +74,20 @@ named!(parse_shape_coords<CompleteStr, ShapeCoords>,
     width:  parse_usize >>
             tag!("x")   >>
     height: parse_usize >>
-    (ShapeCoords { id, xpos, ypos, width: 0, height: 0 })
+    (ShapeCoords { id, xpos, ypos, width, height })
   )
 );
 
 pub fn main() {
-    let (
-        _, ShapeCoords { xpos, ypos, .. }
-    ) = parse_shape_coords(CompleteStr("#1 @ 850,301: 23x12")).unwrap();
-    println!("{}, {}", xpos, ypos);
-    // let mut matrix = DMatrixi32::zeros(10,10);
-    // for i in 0..8 {
-    //     matrix = matrix.draw_rect(i, i, 3, 3, |v| v + 1)
-    // }
-    // println!("{}", matrix);
-    // =>
-    // ┌                     ┐
-    // │ 1 1 1 0 0 0 0 0 0 0 │
-    // │ 1 2 2 1 0 0 0 0 0 0 │
-    // │ 1 2 3 2 1 0 0 0 0 0 │
-    // │ 0 1 2 3 2 1 0 0 0 0 │
-    // │ 0 0 1 2 3 2 1 0 0 0 │
-    // │ 0 0 0 1 2 3 2 1 0 0 │
-    // │ 0 0 0 0 1 2 3 2 1 0 │
-    // │ 0 0 0 0 0 1 2 3 2 1 │
-    // │ 0 0 0 0 0 0 1 2 2 1 │
-    // │ 0 0 0 0 0 0 0 1 1 1 │
-    // └                     ┘
+    let text = include_str!("../resources/day3.txt");
+    let mut matrix = DMatrixi32::zeros(1000,1000);
+    for line in text.lines() {
+        let coords = parse_shape_coords(CompleteStr(line));
+        match coords {
+            Ok((_, ShapeCoords { xpos, ypos, width, height, .. })) =>
+                matrix = matrix.draw_rect(xpos - 1, ypos - 1, width, height, |v| v + 1),
+            _ => ()
+        }
+    }
+    println!("{}", matrix);
 }
-
