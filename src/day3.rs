@@ -2,7 +2,6 @@ extern crate nalgebra as na;
 
 use self::na::{Dynamic, MatrixVec, Matrix};
 
-// Statically sized and statically allocated 2x3 matrix using 32-bit floats.
 type DMatrixi32 = Matrix<i32, Dynamic, Dynamic, MatrixVec<i32, Dynamic, Dynamic>>;
 
 trait Draw {
