@@ -31,7 +31,7 @@ named!(
     take_while!(|c: char| c.is_whitespace())
 );
 
-named!(parse_shape_coords<CompleteStr, ParsedSlice>,
+named!(parse_slice<CompleteStr, ParsedSlice>,
     do_parse!(
         tag!("#")           >> id:     parse_i32   >>
         whitespace          >>
@@ -45,19 +45,43 @@ named!(parse_shape_coords<CompleteStr, ParsedSlice>,
     )
 );
 
-fn inc_matrix_slice(matrix: &mut DMatrixi32, shape_coords: ParsedSlice) {
-    let ParsedSlice { xpos, ypos, width, height, .. } = shape_coords;
+fn parse_slices(text: &str) -> Vec<ParsedSlice> {
+    text
+        .lines()
+        .filter_map(|line| parse_slice(CompleteStr(line)).ok())
+        .map(|(_, pslice)| pslice)
+        .collect::<Vec<ParsedSlice>>()
+
+}
+
+fn inc_matrix_slice(matrix: &mut DMatrixi32, pslice: &ParsedSlice) {
+    let ParsedSlice { xpos, ypos, width, height, .. } = *pslice;
     matrix.slice_mut((xpos, ypos), (width, height)).apply(|v| v + 1);
+}
+
+fn matrix_slice_all_eq(matrix: &DMatrixi32, pslice: &ParsedSlice, i: i32) -> bool {
+    let ParsedSlice { xpos, ypos, width, height, .. } = *pslice;
+    matrix.slice((xpos, ypos), (width, height)).iter().all(|&v| v == i)
 }
 
 pub fn main() {
     let text = include_str!("../resources/day3.txt");
     let mut matrix = DMatrixi32::zeros(1000,1000);
-    for line in text.lines() {
-        parse_shape_coords(CompleteStr(line))
-            .map(|(_, pslice)| inc_matrix_slice(&mut matrix, pslice))
-            .ok();
+    let parsed_slices = parse_slices(text);
+    for pslice in parsed_slices.iter() {
+        inc_matrix_slice(&mut matrix, pslice)
     }
-    let result = matrix.iter().filter(|&&x| x > 1).count();
-    println!("{}", result);
+    let overlaps = matrix.iter().filter(|&&x| x > 1).count();
+    println!("Overlapping cells: {}", overlaps);
+    let no_overlap = parsed_slices.iter().find_map(|pslice| {
+        if matrix_slice_all_eq(&matrix, pslice, 1) {
+            Some(pslice.id)
+        } else {
+            None
+        }
+    });
+    match no_overlap {
+        Some(id) => println!("Slice ID without overlap: {}", id),
+        None     => println!("No slice found without overlap")
+    }
 }
