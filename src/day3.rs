@@ -1,3 +1,5 @@
+/// Advent of Code Day 3
+/// https://adventofcode.com/2018/day/3
 use na::{Dynamic, MatrixVec, Matrix};
 use nom::types::{CompleteStr};
 

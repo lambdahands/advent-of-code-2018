@@ -1,3 +1,5 @@
+/// Advent of Code Day 1
+/// https://adventofcode.com/2018/day/1
 use std::collections::HashSet;
 
 fn parse_line_num(line: &str) -> Option<i32> {

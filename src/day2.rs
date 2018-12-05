@@ -1,3 +1,5 @@
+/// Advent of Code Day 2
+/// https://adventofcode.com/2018/day/2
 use std::collections::HashMap;
 
 type Counts = HashMap<char, u32>;
