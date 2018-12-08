@@ -1,5 +1,4 @@
 extern crate nalgebra as na;
-#[macro_use]
 extern crate nom;
 
 mod day1;
@@ -16,8 +15,6 @@ fn main() {
         Some("day2") => day2::main(),
         Some("day3") => day3::main(),
         Some(_) => println!("No days matched!"),
-        _ => println!("Please enter day")
+        _ => println!("Please enter day"),
     }
 }
-
-
